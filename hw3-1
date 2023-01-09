@@ -1,0 +1,127 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+class HealthProfile
+{
+    private:
+        string name;
+        double age;
+        double weight;
+        double height;
+    public:
+        void setName(string);
+        void setAge(double);
+        void setWeight(double);
+        void setHeight(double, double);
+
+        string getName();
+        double getAge();
+        double getWeight();
+        double getHeight();
+        double getBMI();
+        string getCategory();
+        double getMaxHR();
+
+        void printProfile();  
+};
+void HealthProfile::setName(string n)
+{
+    name = n;
+}
+void HealthProfile::setAge(double a)
+{
+    age = a;
+}
+void HealthProfile::setWeight(double w)
+{
+    weight = w;
+}
+void HealthProfile::setHeight(double feet, double inches)
+{
+    height = (feet * 12) + inches;
+}
+string HealthProfile::getName()
+{
+    return name;
+}
+double HealthProfile::getAge()
+{
+    return age;
+}
+double HealthProfile::getWeight()
+{
+    return weight;
+}
+double HealthProfile::getHeight()
+{
+    return height;
+}
+double HealthProfile::getBMI()
+{   
+    cout << fixed << setprecision(1);
+    //calculate BMI
+    double bmi;
+    bmi = (weight * 703)/(height * height);
+    return bmi;
+}
+string HealthProfile::getCategory()
+{
+    string category;
+    //get category
+    if (getBMI() < 18.5)
+        category = "Underweight";
+    else if (getBMI() >= 18.5 && getBMI() < 25)
+        category = "Normal";
+    else if (getBMI() >= 25 && getBMI() < 30)
+        category = "Overweight";
+    else
+        category = "Obese";
+    return category;
+}
+//calculate and return max heart
+//needs age
+double HealthProfile::getMaxHR()
+{
+    //get max heart rate
+    double hr;
+    hr = 220 - age;
+    return hr;
+}
+void HealthProfile::printProfile()
+{
+    //print
+    cout << "\nHealth Profile for " << name << endl;
+    cout << "BMI:   " << getBMI() << endl;
+    cout << "BMI Category: " << getCategory() << endl;
+    cout << fixed << setprecision(0) << endl;
+    cout << "Max heart rate: " << getMaxHR() << endl;
+}
+int main() 
+{
+    HealthProfile temp;
+    string name = "";
+    double age, weight, feet, inches, bmi;
+    string category;
+    cout << "Enter name or X to quit: ";
+    cin >> name;
+    while (name != "X" && name != "x")
+    {   
+        temp.setName(name);
+        cout << "Your age: ";
+        cin >> age;
+        cout << "Your weight: ";
+        cin >> weight;
+        cout << "Your height - feet: ";
+        cin >> feet;
+        cout << "Your height - inches: ";
+        cin >> inches;
+        temp.setAge(age);
+        temp.setWeight(weight);
+        temp.setHeight(feet, inches);
+        temp.printProfile();   
+        cout << "\nEnter name or X to quit: ";
+        cin >> name;
+    }
+    cout << "\nCoded by Amelie Yoon" << endl;
+}
