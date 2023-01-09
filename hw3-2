@@ -1,0 +1,120 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+//create class Registration
+class Registration
+{
+    private:
+        string name;
+        int reg;
+    public:
+        bool setCompany(string);
+        bool setNumReg(int);
+
+        string getCompany();
+        int getNumReg();
+        double getEach();
+        double getTotal();
+
+        void printInvoice(Registration);
+};
+//functions, return values in get functions, set user input in set functions
+bool Registration::setCompany(string n)
+{
+    //check data
+    if (n.empty())
+        return false;
+    else
+        name = n; 
+        return true;
+}
+bool Registration::setNumReg(int r)
+{
+    if (r <= 0)
+        return false;
+    else   
+        reg = r;
+        return true;
+}
+string Registration::getCompany()
+{
+    return name;
+}
+int Registration::getNumReg()
+{
+    return reg;
+}
+double Registration::getEach()
+{
+    double each;
+    cout << fixed << setprecision(2);
+    if (reg > 10)
+        each = 99.95;
+    else if (reg < 10 && reg >= 4)
+        each = 175;
+    else
+        each = 200;
+    return each;
+}
+double Registration::getTotal()
+{
+    double total;
+    cout << fixed << setprecision(2);
+    total = getNumReg() * getEach();
+    return total;
+}
+void Registration::printInvoice(Registration temp)
+{
+    cout << "\nINVOICE" << endl;
+    cout << getCompany() << ", " << getNumReg() << " registered" << endl;
+    cout << "Cost per registrant: $" << getEach() << endl;
+    cout << "Total for " << getNumReg() << " is $" << getTotal() << endl;
+}
+int main() 
+{
+    //create object
+    Registration temp;
+    //declare variables for user input
+    string name;
+    int reg;
+    char yn = 'y';
+    //number of companies
+    int compnum = 0;
+    //total reg charges
+    double totalcharge = 0;
+    //average charge per company
+    double average;
+    
+    while (yn == 'Y' || yn == 'y')
+    {
+        cout << "Enter company name: ";
+        cin >> name;
+        //print error message until valid data is given
+        while (temp.setCompany(name) == false)
+        {
+            cout << "Name cannot be blank, re-enter: ";
+            cin >> name;
+        }
+        cout << "How many registrants? ";
+        cin >> reg;
+        while (temp.setNumReg(reg) == false)
+        {
+            cout << "Invalid, re-enter: ";
+            cin >> reg;
+        }
+        temp.printInvoice(temp);
+        compnum++;
+        totalcharge += temp.getTotal();
+        cout << "\nAnother registration? (Y/N)";
+        cin >> yn;
+    }
+    cout << "\nREGISTRATION SUMMARY" << endl;
+    cout << fixed << setprecision(2) << endl;
+    //average charge per company
+    average = totalcharge/compnum;
+    cout << "Number of companies registered: " << compnum << endl;
+    cout << "Total registration charges: $" << right << setw(7) << totalcharge << endl;
+    cout << "Average charge per company: $" << right << setw(7) << average << endl;
+    cout << "Coded by Amelie Yoon" << endl; 
+}
