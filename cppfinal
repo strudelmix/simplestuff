@@ -1,0 +1,99 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+void printReport();
+void honorRoll();
+int main() 
+{
+    printReport();
+    honorRoll();
+} 
+void printReport()
+{
+    //declare the variables
+    ifstream infile;
+    string name;
+    char grade;    
+    //declare variables to store test1, test2, and final (and average)
+    double test1, test2, exam, average;
+    //open file
+    infile.open("grades.txt");
+    if (!infile.is_open())
+    {
+        cout << "File not found" << endl;
+    }
+    else
+    {
+        //print start of report
+        cout << "Grade Report" << endl;
+        cout << "Name               Average     Grade" << endl;
+        //store name using getline 
+        getline(infile, name, '#');
+        //use while loop to go until end of file
+        while (!infile.eof())
+        {
+            infile >> test1 >> test2 >> exam;
+            //calculate the average
+            average = (test1 + test2 + exam + exam)/4;
+            //set precision
+            cout << setprecision(1) << fixed;
+            //find letter grade
+            if (average >= 90)
+                grade = 'A';
+            else if (average >= 80 && average < 90)
+                grade = 'B';
+            else if (average >= 70 && average < 80)
+                grade = 'C';
+            else if (average >= 60 && average < 70)
+                grade = 'D';
+            else
+                grade = 'F';
+            cout << left << setw(20) << name << left << setw(14) << average << grade;
+            //ignore enter
+            infile.ignore();
+            //store name using getline 
+            getline(infile, name, '#');
+        }
+        infile.close();
+    }
+}
+void honorRoll()
+{
+    //declare the variables
+    ifstream infile;
+    string name;
+    //declare variables to store test1, test2, and final (and average)
+    double test1, test2, exam, average;
+    //open file
+    infile.open("grades.txt");
+    if (!infile.is_open())
+    {
+        cout << "File not found" << endl;
+    }
+    else
+    {
+        //print start of honor roll
+        cout << "" << endl << "\nHonor Roll Students";
+        //store name using getline 
+        getline(infile, name, '#');
+        //use while loop to go until end of file
+        while (!infile.eof())
+        {
+            infile >> test1 >> test2 >> exam;
+            //calculate the average
+            average = (test1 + test2 + exam + exam)/4;
+            //find if A or B
+            if (average >= 90)
+                cout << name;
+            else if (average >= 80 && average < 90)
+                cout << name;
+            //ignore enter
+            infile.ignore();
+            //store name using getline 
+            getline(infile, name, '#');
+        }
+        infile.close();
+    }
+}
