@@ -1,0 +1,163 @@
+//cs102
+//hw 7-1
+//this program prompts the user to answer randomly generated math questions
+#include <iostream>
+#include <ctime>
+#include <iomanip>
+using namespace std;
+
+int checkAnswer(int);
+int main() 
+{
+    //declare variables
+    int num1, num2, correct, user, loopproblem = 0, loopcorrect = 0, valid = 1;
+    double percentage;
+    char op;
+
+    //seed the generator
+    srand((time(0)));
+
+    //print and prompt user
+    cout << "Welcome to the Math Tutor!" << endl;
+
+    //get the first input
+    cout << "Enter op (+ - * /) or q to quit: ";
+    cin >> op;
+        
+    while (op != 'q')
+    {
+        //process operation
+        if (op == '-')
+        {
+            //get random numbers between 1-12
+            num1 = 1 + rand() % 12;
+            num2 = 1 + rand() % 12;
+
+            //make sure smaller number is subtracted
+            if (num1 > num2)
+            {
+                cout << num1 << " - " << num2 << " = ";
+                correct = num1 - num2;
+            }
+            else
+            {
+                cout << num2 << " - " << num1 << " = ";
+                correct = num2 - num1;
+            }
+            loopproblem++;
+        }
+        else if (op == '/')
+        {
+            num1 = 6 + rand() % 7;
+            num2 = 1 + rand() % 5;
+            cout << num1 << " / " << num2 << " = ";
+            correct = num1/num2;
+            loopproblem++;
+        }
+        else if (op == '+')
+        {
+            num1 = 1 + rand() % 12;
+            num2 = 1 + rand() % 12;
+            cout << num1 << " + " << num2 << " = ";
+            correct = num1 + num2;
+            loopproblem++;
+        }
+        else if (op == '*')
+        {
+            num1 = 1 + rand() % 12;
+            num2 = 1 + rand() % 12;
+            cout << num1 << " * " << num2 << " = ";
+            correct = num1 * num2;
+            loopproblem++;
+        }
+        else if (op != 'q')
+        {
+            cout << "Invalid operation" << endl << "\n";
+            valid = 2;
+            //no loopproblem++, no problem generated
+        }
+        
+       //get answer and see if correct
+        if (valid == 1 && checkAnswer(correct) == true)
+        {
+            loopcorrect++;
+        }
+
+        valid = 1;
+        //get next operation
+        cout << "Enter op (+ - * /) or q to quit: ";
+        cin >> op;
+    } 
+    //calculate percentage correct
+    percentage = 100 * loopcorrect/loopproblem;
+    cout << "GAME STATISTICS" << endl;
+    cout << "Number of problems:     " << loopproblem << endl;
+    cout << "Number correct:         " << loopcorrect << endl;
+    cout << "Your score is " << percentage << "%" << endl;
+    cout << "Coded by Amelie Yoon";
+}
+
+int checkAnswer(int correctanswer)
+{
+    //declare variable for user answer
+    int user;
+
+    //store a value in user answer
+    cin >> user;
+
+    //if this value matches correct answer
+    if (user == correctanswer)
+    {
+        cout << "That's right!" << endl << "\n";
+        return 1;
+    }
+    else
+    {
+        cout << "The answer is " << correctanswer << endl << "\n";
+        return 0;
+    }
+}
+
+/*
+Welcome to the Math Tutor!
+Enter op (+ - * /) or q to quit: +
+9 + 1 = 10
+That's right!
+
+Enter op (+ - * /) or q to quit: -
+6 - 4 = 3
+The answer is 2
+
+Enter op (+ - * /) or q to quit: *
+7 * 11 = 77
+That's right!
+
+Enter op (+ - * /) or q to quit: /
+9 / 5 = 1
+That's right!
+
+Enter op (+ - * /) or q to quit: d
+Invalid operation
+
+Enter op (+ - * /) or q to quit: -
+12 - 7 = 5
+That's right!
+
+Enter op (+ - * /) or q to quit: +
+5 + 12 = 17
+That's right!
+
+Enter op (+ - * /) or q to quit: +
+10 + 7 = 17
+That's right!
+
+Enter op (+ - * /) or q to quit: *
+10 * 8 = 80
+That's right!
+
+Enter op (+ - * /) or q to quit: q
+GAME STATISTICS
+Number of problems:     8
+Number correct:         7
+Your score is 87%
+*/
