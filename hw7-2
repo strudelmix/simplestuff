@@ -1,0 +1,126 @@
+//cs102
+//hw7-2
+//this program calculates the sum or product of 1 through a given integer
+
+#include <iostream>
+using namespace std;
+
+int getNum();
+int calcSum(int);
+int calcProd(int);
+int main() 
+{
+    //declare variables
+    int integer, result;
+    char choice, choice2, binary = 'y';
+    
+    //loop goes while y
+    while (binary == 'y' || binary == 'Y')
+    {
+        //prompt user
+        cout << "\nEnter S for sum, P for product: ";
+        cin >> choice;
+        //convert to lowercase
+        choice2 = tolower(choice);
+
+        //only 2 valid choices
+        if (choice2 == 's' || choice2 == 'p')
+        {
+            //ask for integer & check if integer is more than 1
+            integer = getNum();
+
+            switch (choice2)
+            {
+                case 's' :   result = calcSum(integer);
+                    cout << "The sum of the numbers from 1 to " << integer << " is " << result << endl;
+                    break;
+                case 'p':   result = calcProd(integer);
+                    cout << "The product of the numbers from 1 to " << integer << " is " << result << endl;
+                    break;
+            }
+        }       
+        else
+        {
+            cout << "Invalid operation" << endl;
+        }
+        cout << "Again? (y/n): ";
+        cin >> binary; 
+    }
+    cout << "Coded by Amelie Yoon";
+} 
+int getNum()
+{
+    //declare variable
+    int number;
+
+    cout << "Enter an integer greater than 1: ";
+    cin >> number;
+
+    //makes user input variable greater than 1
+    while (number <= 1)
+    {
+        cout << "Must be greater than 1, re-enter: ";
+        cin >> number;
+    }
+    return number;
+}
+int calcSum(int integer)
+{
+    int total = 0, loop = 1;
+    //adds each loop to integer
+    while (loop <= integer)
+    {
+        total += loop;
+        loop++;
+    }
+    return total;
+}
+int calcProd(int integer)
+{
+    //total must be 1 not 0
+    int total = 1, loop = 1;
+    while (loop <= integer)
+    {
+        total *= loop;
+        loop++;
+    }
+    return total;
+}
+
+/*
+Enter S for sum, P for product: z
+Invalid operation
+Again? (y/n): y
+
+Enter S for sum, P for product: s
+Enter an integer greater than 1: 1
+Must be greater than 1, re-enter: -3
+Must be greater than 1, re-enter: 3
+The sum of the numbers from 1 to 3 is 6
+Again? (y/n): y
+
+Enter S for sum, P for product: p
+Enter an integer greater than 1: 4
+The product of the numbers from 1 to 4 is 24
+Again? (y/n): y
+
+Enter S for sum, P for product: S
+Enter an integer greater than 1: 15
+The sum of the numbers from 1 to 15 is 120
+Again? (y/n): y
+
+Enter S for sum, P for product: P
+Enter an integer greater than 1: 8
+The product of the numbers from 1 to 8 is 40320
+Again? (y/n): y
+
+Enter S for sum, P for product: S
+Enter an integer greater than 1: 25
+The sum of the numbers from 1 to 25 is 325
+Again? (y/n): y
+
+Enter S for sum, P for product: P
+Enter an integer greater than 1: 12
+The product of the numbers from 1 to 12 is 479001600
+Again? (y/n): n
+*/
